@@ -1,0 +1,89 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style>
+		.buttonCSS{
+			position: absolute;
+			top: 80px;
+			border: solid black 2px;
+			padding: 50px;
+			border-radius: 100%;
+		}
+		canvas{
+			background-color: yellow;
+			position: absolute;
+			top: 220px;
+			left: 375px;
+		}
+	</style>
+</head>
+<body style='background-image: url("https://cdn.pixabay.com/photo/2021/02/24/20/53/abstract-6047465_1280.jpg"); background-size: cover;'>
+
+<button onclick="chooseColour('green')" style="background-color: green; left: 330px;" class="buttonCSS"></button>
+
+<button onclick="chooseColour('blue')" style="background-color: blue; left: 440px;" class="buttonCSS"></button>
+
+<button onclick="chooseColour('red')" style="background-color: red; left:550px;" class="buttonCSS"></button>
+
+<button onclick="chooseColour('purple')" style="background-color: purple; left:660px;" class="buttonCSS"></button>
+
+<button onclick="chooseColour('orange')" style="background-color: orange; left: 770px;" class="buttonCSS"></button>
+
+<button onclick="chooseColour('black')" style="background-color: black; left: 880px;" class="buttonCSS"></button>
+
+<button onclick="chooseColour('yellow')" style="background-color: grey; left: 1050px; color: white; font-size: 15px; border-radius: 5%;" class="buttonCSS">Eraser</button>
+
+<button onclick="setSize()" style="position: absolute; left: 1230px; top: 80px; background-color: grey; border-radius: 5%; font-size: 15px; color: white;" class="buttonCSS">Choose size</button>
+
+<canvas id="canvas" onmousedown="funcMouseDown(event)" onmousemove="funcMouseMove(event)" onmouseup="funcMouseUp(event)" width="1050" height="600"></canvas>
+
+<button onclick="clearCanvas()" style="position: relative; left: 850px; top: 820px; background-color: grey; border-radius: 5%; font-size: 15px; color: white;" class="buttonCSS">Clear</button>
+<script>
+	isMouseDown = false;
+	var previousX;
+	var previousY;
+	
+	var c = document.getElementById("canvas");
+	var ctx = c.getContext("2d");
+	
+	ctx.strokeStyle = "black";
+	ctx.lineWidth = 5;
+	function funcMouseDown(event){
+		isMouseDown = true;
+		previousX = event.offsetX;
+		previousY = event.offsetY;
+	}
+
+	function funcMouseMove(event){
+		if(isMouseDown == true){
+			ctx.beginPath();
+			ctx.moveTo(previousX,previousY);
+			ctx.lineTo(event.offsetX, event.offsetY);
+			ctx.lineCap = "round";
+			ctx.stroke();
+			previousX = event.offsetX;
+			previousY = event.offsetY;
+		}
+	}
+
+	function funcMouseUp(event){
+		isMouseDown = false;
+	}
+
+	function chooseColour(colour){
+		ctx.strokeStyle = colour;
+	}
+
+	function setSize(){
+		var size = +prompt("Set size for pen/eraser: ");
+		ctx.lineWidth = size;
+	}
+
+	function clearCanvas(){
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+	}
+</script>
+</body>
+</html>
